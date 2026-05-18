@@ -2,7 +2,11 @@ import { readdir, mkdir, rename } from "fs/promises";
 import { join, basename, extname, dirname } from "path";
 import { fileURLToPath } from "url";
 import { existsSync } from "fs";
-import { companyLogoPathPrefix } from "../lib/company-logo";
+/** Two-letter shard folder (same rule as fetch-icons.mjs / CDN layout). */
+function companyLogoPathPrefix(stem: string): string {
+  const normalized = stem.replace(/[_.-]/g, "").toLowerCase();
+  return (normalized + "__").slice(0, 2);
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ICONS_DIR = join(__dirname, "icons");
